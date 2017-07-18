@@ -88,6 +88,10 @@ var authors_list = [
     alive: false
   }
 ];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 12ba32974266c40d04ce99474415a4901f3ac012
 db.Author.remove({}, function(err, authors) {
   console.log('removed all authors');
   db.Author.create(authors_list, function(err, authors){

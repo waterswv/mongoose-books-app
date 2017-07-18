@@ -75,7 +75,6 @@ app.post('/api/books', function (req, res) {
       createBookWithAuthorAndRespondTo(newBook, author, res);
     }
   });
-});
 
 function createBookWithAuthorAndRespondTo(book, author, res) {
   // add this author to the book
@@ -90,7 +89,7 @@ function createBookWithAuthorAndRespondTo(book, author, res) {
     res.json(book);
   });
 }
-
+});
 
 // delete book
 app.delete('/api/books/:id', function (req, res) {
@@ -106,12 +105,12 @@ app.delete('/api/books/:id', function (req, res) {
 // Create a character associated with a book
 app.post('/api/books/:book_id/characters', function (req, res) {
   // Get book id from url params (`req.params`)
-  var bookId = req.parades.book_id;
+  var bookId = req.params.book_id;
   db.Book.findById(bookId)
     .populate('author') // Reference to author
     // now we can worry about saving that character
     .exec(function(err, foundBook) {
-      console.log(foundBoolean);
+      console.log(foundBook);
       if (err) {
         res.status(500).json({error: err.message});
       } else if (foundBook === null) {
