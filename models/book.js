@@ -18,5 +18,7 @@ let BookSchema = new Schema({
  });
 
  let Book = mongoose.model('Book', BookSchema);
+ let Character = mongoose.model('Character', CharacterSchema); // This isn't neccesary if you don't plan to use Character outside of the Book Schema
 
  module.exports = Book;
+ module.exports = Character; // This isn't neccesary if you don't plan to use Character outside of the Book Schema
