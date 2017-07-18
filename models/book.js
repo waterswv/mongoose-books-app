@@ -4,7 +4,10 @@ let Schema = mongoose.Schema;
 
 let BookSchema = new Schema({
      title: String,
-     author: String,
+     author: {
+       type: Schema.Types.ObjectId,
+       ref: 'Author'
+     },
      image: String,
      releaseDate: Date
  });
