@@ -60,6 +60,7 @@ app.get('/api/books/:id', function(req, res) {
   let myBookId = req.params.id;
   console.log("User submitted Book ID is "+myBookId);
 
+  // this takes the ID parameter from browser and uses it to return the book along with a populated author id
   db.Book.findOne({_id: myBookId}).populate('author').exec(function(err, theBook) {
     if(err){
       console.log("error!", err);
@@ -80,7 +81,6 @@ app.get('/api/books/:id', function(req, res) {
 
 // create new book
 app.post('/api/books', function(req, res) {
-
   // create new book with form data (`req.body`)
   var newBook = new db.Book({
     title: req.body.title,
@@ -90,6 +90,9 @@ app.post('/api/books', function(req, res) {
 
   // this code will only add an author to a book if the author already exists
   db.Author.findOne({name: req.body.author}, function(err, author){
+    if (err){
+      return console.log(err);
+    }
     newBook.author = author;
     // add newBook to database
     newBook.save(function(err, book){
@@ -111,14 +114,16 @@ app.put('/api/books/:id', function(req, res) {
   var bookId = req.params.id;
 
     // find book in db by id
-    db.Book.findOne({ _id: bookId }, function(err, foundBook) {
+    db.Book.findOne({ _id: bookId }).populate('author').exec(function(err, foundBook) {
         // update the books's attributes
         foundBook.title = req.body.title;
-        foundBook.author = req.body.author;
+        foundBook.author.name = req.body.author;
 
         // save updated book in db
         foundBook.save(function(err, savedBook) {
+            console.log("This is before the json",savedBook);
             res.json(savedBook);
+            
         });
     });
 });
