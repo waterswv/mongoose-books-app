@@ -2,12 +2,17 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
+let CharacterSchema = new Schema ({
+  name: String
+})
+
 let BookSchema = new Schema({
      title: String,
      author: {
        type: Schema.Types.ObjectId,
        ref: 'Author'
      },
+     characters: [CharacterSchema],
      image: String,
      releaseDate: Date
  });
